@@ -1,5 +1,5 @@
 
-package univs.edu.br;
+package univs.edu.usuario;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class usuario {
+public class Usuario {
     
     @Id
     @GeneratedValue
