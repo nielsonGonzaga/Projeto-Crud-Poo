@@ -5,15 +5,25 @@
  */
 package univs.edu.telas;
 
+import javax.swing.JOptionPane;
+import univs.edu.usuario.Usuario;
+import univs.edu.usuario.UsuarioDAO;
+
 /**
  *
  * @author LABORATORIO 01
  */
 public class TelaUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaUsuario
-     */
+   Usuario usuario;
+   UsuarioDAO dao;
+   initComponents();
+   
+   usuario = new Usiario();
+   dao = new UsuaruiDASO();
+   
+    
+    
     public TelaUsuario() {
         initComponents();
     }
@@ -30,20 +40,25 @@ public class TelaUsuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        tfLogin = new javax.swing.JTextField();
+        tfSenha = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("xadastro usuario");
+        jLabel1.setText("cadastro usuario");
 
         jLabel2.setText("login");
 
         jLabel3.setText("senha");
 
         jButton2.setText("salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("pesquisar");
 
@@ -52,25 +67,26 @@ public class TelaUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPasswordField1)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                                    .addComponent(jButton3)))))
-                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 18, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(65, 65, 65)
+                                .addComponent(jButton3)
+                                .addGap(54, 54, 54))
+                            .addComponent(tfLogin)
+                            .addComponent(tfSenha)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(157, 157, 157)
                         .addComponent(jLabel1)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,22 +95,47 @@ public class TelaUsuario extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                    .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(56, 56, 56))
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
+                .addGap(43, 43, 43))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        
+        if(tfLogin.getText().isEmpty() || tfSenha.getText().isEmpty()){
+        usuario.setLogin(tfLogin.getText());
+        usuario.setSenha(tfSenha.getText());
+        dao.salvar(usuario);
+            JOptionPane.showMessageDialog(null,"Usuario cadastrado");
+            limparCampos();
+        }else{
+         JOptionPane.showMessageDialog(null,"Prencher todos os campos");
+    }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    
+    public void limparCampos(){
+        usuario = new Usuario();
+        tfLogin.setText("");
+          tfSenha.setText("");
+        
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -136,7 +177,7 @@ public class TelaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField tfLogin;
+    private javax.swing.JPasswordField tfSenha;
     // End of variables declaration//GEN-END:variables
 }
