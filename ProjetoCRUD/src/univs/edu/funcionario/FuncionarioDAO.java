@@ -51,7 +51,7 @@ public class FuncionarioDAO {
                 getSessionFactory().openSession();
         transacao = sessao.beginTransaction();
         Funcionario funcionario = (Funcionario) sessao.
-                createCriteria(Usuario.class)
+                createCriteria(Funcionario.class)
                 .add(Restrictions.eq("idFuncionario", id))
                 .uniqueResult();
         sessao.close();
@@ -66,6 +66,20 @@ public class FuncionarioDAO {
                 createCriteria(Funcionario.class).list();
         sessao.close();
         return funcionarios;
+    }
+    
+    public Funcionario autenticarFuncionario(String login, String senha){
+        sessao = HibernateUtil.
+                getSessionFactory().openSession();
+        transacao = sessao.beginTransaction();
+        Funcionario funcionario = (Funcionario) sessao.
+                createCriteria(Funcionario.class)
+                .add(Restrictions.eq("usuario.login", login))
+                .add(Restrictions.eq("usuario.senha", senha))
+                .uniqueResult();
+        sessao.close();
+        
+        return funcionario != null ? funcionario : null;
     }
     
 }
